@@ -96,10 +96,11 @@ def depthFirstSearch(problem):
     while not problem.isGoalState(current_state):
         if current_state not in visited:
             visited.append(current_state)
-            for neighour in problem.getSuccessors(current_state):       
-                stack.push(neighour[0])
-                print("Push node - ", neighour[0])
-                
+            for neighour in problem.getSuccessors(current_state):    
+                if(neighour[0] not in visited):   
+                    stack.push(neighour[0])
+                    print("Push node - ", neighour[0])
+                    
         next_state = stack.pop()
         current_state = next_state[0]
         print("Pop node - ", current_state)
