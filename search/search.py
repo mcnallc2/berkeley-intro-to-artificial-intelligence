@@ -222,7 +222,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 # neighbour has not been visited
                 if(neighbour[0] not in visited):
                     # get cost of path containing this neighbour 
-                    cost = problem.getCostOfActions(ucs_path+[neighbour[1]]) + heuristic(neighbour[1], problem)
+                    cost = problem.getCostOfActions(ucs_path+[neighbour[1]]) + heuristic(neighbour[0], problem)
                     # push neighbour node and path list to queue based on cost
                     next_node_queue.push(neighbour[0], cost)
                     next_path_queue.push([ucs_path+[neighbour[1]]], cost)
