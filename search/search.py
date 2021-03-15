@@ -124,14 +124,35 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
-    queue = Queue()
-    current_state = problem.getStartState()
-    for neighour in problem.getSuccessors(current_state):
-        queue.push(neighour[0])    
-        print("Push - " , neighour[0]) 
+    # A stack data structure is used search the deepest nodes first
+    next_node_stack = Queue()  # Stack to store next node to visit
+    next_path_stack = Queue()  # Stack to store next path
+    visited = []               # list to contain node that have been visited
+    bfs_path = []              # list to contain the dfs path sequence
 
-    node = queue.pop()
-    print("Pop - " , node)    
+    # set current state to start state
+    current_state = problem.getStartState()    
+    
+    # iterate until the goal state is reached
+    while not problem.isGoalState(current_state):
+        # if the current state has not been visited 
+        if current_state not in visited:
+            # add current state to list of visited nodes
+            visited.append(current_state)
+            # iterate through all neighouring nodes
+            for neighour in problem.getSuccessors(current_state):
+                # neighbour has not been visited
+                if(neighour[0] not in visited):  
+                    # push neighbour node and path list to top of stack
+                    next_node_stack.push(neighour[0])
+                    next_path_stack.push([bfs_path+[neighour[1]]])
+        
+        # to go deep first we pop next node and path from top of stack
+        current_state = next_node_stack.pop()
+        bfs_path = next_path_stack.pop()[0]
+
+    return bfs_path
+  
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
