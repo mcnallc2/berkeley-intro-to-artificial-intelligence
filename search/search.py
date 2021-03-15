@@ -201,7 +201,37 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    # A priority queue data structure is used search the deepest nodes first
+    next_node_queue = PriorityQueue()  # PQueue to store next node to visit
+    next_path_queue = PriorityQueue()  # PQueue to store next path
+    visited = []               # list to contain node that have been visited
+    ucs_path = []              # list to contain the bfs path sequence
+
+    # set current state to start state
+    current_state = problem.getStartState()    
+    
+    # iterate until the goal state is reached
+    while not problem.isGoalState(current_state):
+        # if the current state has not been visited 
+        if current_state not in visited:
+            # add current state to list of visited nodes
+            visited.append(current_state)
+            # iterate through all neighouring nodes
+            for neighbour in problem.getSuccessors(current_state):
+                # neighbour has not been visited
+                if(neighbour[0] not in visited):
+                    # get cost of path containing this neighbour 
+                    cost = problem.getCostOfActions(ucs_path+[neighbour[1]])
+                    # push neighbour node and path list to queue based on cost
+                    next_node_queue.push(neighbour[0], cost)
+                    next_path_queue.push([ucs_path+[neighbour[1]]], cost)
+        
+        # to go deep first we pop next node and path from end of queue
+        current_state = next_node_queue.pop()
+        ucs_path = next_path_queue.pop()[0]
+
+    return ucs_path
 
 
 # Abbreviations
