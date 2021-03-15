@@ -90,13 +90,15 @@ def depthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
     
     stack = Stack() 
-    current_state = problem.getStartState()
-    for neighour in problem.getSuccessors(current_state):       
-        stack.push(neighour[0])
-        print("Adding node - ", neighour[0])
-        
-    test_state = stack.pop()
-    print("Pop node - ", test_state)
+    current_state = problem.getStartState()    
+    
+    while not problem.isGoalState(current_state):
+        for neighour in problem.getSuccessors(current_state):       
+            stack.push(neighour[0])
+            print("Adding node - ", neighour[0])
+            
+        next_state = stack.pop()
+        print("Pop node - ", next_state)
 
 
 
