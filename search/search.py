@@ -20,6 +20,7 @@ Pacman agents (in searchAgents.py).
 import util
 from util import Stack
 from util import Queue
+from util import PriorityQueue
 
 class SearchProblem:
     """
@@ -124,11 +125,11 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
-    # A stack data structure is used search the deepest nodes first
-    next_node_stack = Queue()  # Stack to store next node to visit
-    next_path_stack = Queue()  # Stack to store next path
+    # A queue data structure is used search the deepest nodes first
+    next_node_queue = Queue()  # Queue to store next node to visit
+    next_path_queue = Queue()  # Queue to store next path
     visited = []               # list to contain node that have been visited
-    bfs_path = []              # list to contain the dfs path sequence
+    bfs_path = []              # list to contain the bfs path sequence
 
     # set current state to start state
     current_state = problem.getStartState()    
@@ -144,12 +145,12 @@ def breadthFirstSearch(problem):
                 # neighbour has not been visited
                 if(neighour[0] not in visited):  
                     # push neighbour node and path list to top of stack
-                    next_node_stack.push(neighour[0])
-                    next_path_stack.push([bfs_path+[neighour[1]]])
+                    next_node_queue.push(neighour[0])
+                    next_path_queue.push([bfs_path+[neighour[1]]])
         
         # to go deep first we pop next node and path from top of stack
-        current_state = next_node_stack.pop()
-        bfs_path = next_path_stack.pop()[0]
+        current_state = next_node_queue.pop()
+        bfs_path = next_path_queue.pop()[0]
 
     return bfs_path
   
@@ -157,7 +158,16 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    next_node_queue = PriorityQueue()
+    current_state = problem.getStartState()
+    i=5
+    for neighour in problem.getSuccessors(current_state):
+        next_node_queue.push(neighour[0], i-1)
+        print("Push: ", neighour[0], " - Cost: ", i-1)
+        i-=1
+
+    print("Pop: ", next_node_queue.pop())
+
 
 def nullHeuristic(state, problem=None):
     """
