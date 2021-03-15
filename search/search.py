@@ -144,11 +144,11 @@ def breadthFirstSearch(problem):
             for neighour in problem.getSuccessors(current_state):
                 # neighbour has not been visited
                 if(neighour[0] not in visited):  
-                    # push neighbour node and path list to top of stack
+                    # push neighbour node and path list to top of queue
                     next_node_queue.push(neighour[0])
                     next_path_queue.push([bfs_path+[neighour[1]]])
         
-        # to go deep first we pop next node and path from top of stack
+        # to go deep first we pop next node and path from top of queue
         current_state = next_node_queue.pop()
         bfs_path = next_path_queue.pop()[0]
 
@@ -175,12 +175,13 @@ def uniformCostSearch(problem):
             # add current state to list of visited nodes
             visited.append(current_state)
             # iterate through all neighouring nodes
-            for neighour in problem.getSuccessors(current_state):
+            for neighbour in problem.getSuccessors(current_state):
                 # neighbour has not been visited
-                if(neighour[0] not in visited):  
+                if(neighbour[0] not in visited):  
+                    cost = problem.getCostOfActions(ucs_path+[neighbour[1]])
                     # push neighbour node and path list to top of stack
-                    next_node_queue.push(neighour[0])
-                    next_path_queue.push([ucs_path+[neighour[1]]])
+                    next_node_queue.push(neighbour[0], cost)
+                    next_path_queue.push([ucs_path+[neighbour[1]]], cost)
         
         # to go deep first we pop next node and path from top of stack
         current_state = next_node_queue.pop()
