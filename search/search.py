@@ -125,7 +125,7 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
-    # A queue data structure is used search the deepest nodes first
+    # A queue data structure is used search the shallowest nodes first
     next_node_queue = Queue()  # Queue to store next node to visit
     next_path_queue = Queue()  # Queue to store next path
     visited = []               # list to contain node that have been visited
@@ -144,11 +144,11 @@ def breadthFirstSearch(problem):
             for neighour in problem.getSuccessors(current_state):
                 # neighbour has not been visited
                 if(neighour[0] not in visited):  
-                    # push neighbour node and path list to top of queue
+                    # push neighbour node and path list to front of queue
                     next_node_queue.push(neighour[0])
                     next_path_queue.push([bfs_path+[neighour[1]]])
         
-        # to go deep first we pop next node and path from top of queue
+        # to go deep first we pop next node and path from end of queue
         current_state = next_node_queue.pop()
         bfs_path = next_path_queue.pop()[0]
 
@@ -159,9 +159,9 @@ def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
 
-    # A queue data structure is used search the deepest nodes first
-    next_node_queue = PriorityQueue()  # Queue to store next node to visit
-    next_path_queue = PriorityQueue()  # Queue to store next path
+    # A priority queue data structure is used search the deepest nodes first
+    next_node_queue = PriorityQueue()  # PQueue to store next node to visit
+    next_path_queue = PriorityQueue()  # PQueue to store next path
     visited = []               # list to contain node that have been visited
     ucs_path = []              # list to contain the bfs path sequence
 
@@ -177,13 +177,14 @@ def uniformCostSearch(problem):
             # iterate through all neighouring nodes
             for neighbour in problem.getSuccessors(current_state):
                 # neighbour has not been visited
-                if(neighbour[0] not in visited):  
+                if(neighbour[0] not in visited):
+                    # get cost of path containing this neighbour 
                     cost = problem.getCostOfActions(ucs_path+[neighbour[1]])
-                    # push neighbour node and path list to top of stack
+                    # push neighbour node and path list to queue based on cost
                     next_node_queue.push(neighbour[0], cost)
                     next_path_queue.push([ucs_path+[neighbour[1]]], cost)
         
-        # to go deep first we pop next node and path from top of stack
+        # to go deep first we pop next node and path from end of queue
         current_state = next_node_queue.pop()
         ucs_path = next_path_queue.pop()[0]
 
