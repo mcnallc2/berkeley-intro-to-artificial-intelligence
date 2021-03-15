@@ -89,6 +89,10 @@ class ValueIterationAgent(ValueEstimationAgent):
           terminal state, you should return None.
         """
         "*** YOUR CODE HERE ***"
+
+        max_Qvalue = 0
+        max_Qvalue_Action = None
+        
         for action in self.mdp.getPossibleActions(state):
                 Qvalue = self.getQValue(state, action)
                 if Qvalue > max_Qvalue:
