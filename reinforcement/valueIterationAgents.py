@@ -44,7 +44,8 @@ class ValueIterationAgent(ValueEstimationAgent):
         self.values = util.Counter() # A Counter is a dict with default 0
 
         for state in self.mdp.getStates():
-            print(state)
+            for action in self.mdp.getPossibleActions(state):
+                print(state, action)
 
 
     def getValue(self, state):
