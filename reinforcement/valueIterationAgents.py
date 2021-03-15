@@ -62,9 +62,9 @@ class ValueIterationAgent(ValueEstimationAgent):
         """
         "*** YOUR CODE HERE ***"
         trans_states_probs = self.mdp.getTransitionStatesAndProbs(state, action)
-        print(trans_states_probs)
-
-
+        for trans_state_prob in trans_states_probs:
+            Qvalue = trans_state_prob[1] * (self.mdp.getReward(state, action, trans_state_prob[0]) + self.discount * self.values[trans_state_prob[0]])    
+            # print(Qvalue)
 
     def computeActionFromValues(self, state):
         """
