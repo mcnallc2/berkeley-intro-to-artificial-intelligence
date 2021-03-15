@@ -45,7 +45,7 @@ class ValueIterationAgent(ValueEstimationAgent):
 
         for state in self.mdp.getStates():
             for action in self.mdp.getPossibleActions(state):
-                print(state, action)
+                self.getQValue(state, action)
 
 
     def getValue(self, state):
@@ -61,7 +61,10 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        trans_states_probs = self.mdp.getTransitionStatesAndProbs(state, action)
+        print(trans_states_probs)
+
+
 
     def computeActionFromValues(self, state):
         """
