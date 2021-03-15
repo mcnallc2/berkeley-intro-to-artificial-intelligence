@@ -43,18 +43,17 @@ class ValueIterationAgent(ValueEstimationAgent):
         self.iterations = iterations
         self.values = util.Counter() # A Counter is a dict with default 0
 
-
-        for i in range(self.iterations):       
+        neg_inf = float("-inf")
+        for i in range(self.iterations):   
             for state in self.mdp.getStates():
-                max_Qvalue = 0
+                max_Qvalue = neg_inf
                 for action in self.mdp.getPossibleActions(state):
                     Qvalue = self.getQValue(state, action)
                     if Qvalue > max_Qvalue:
                         max_Qvalue = Qvalue
 
-                if max_Qvalue != 0:
+                if max_Qvalue != neg_inf:
                     self.values[state] = max_Qvalue
-                    print(state, max_Qvalue)
 
 
     def getValue(self, state):
@@ -90,9 +89,10 @@ class ValueIterationAgent(ValueEstimationAgent):
         """
         "*** YOUR CODE HERE ***"
 
-        max_Qvalue = 0
+        neg_inf = float("-inf")
+        max_Qvalue = neg_inf
         max_Qvalue_Action = None
-        
+
         for action in self.mdp.getPossibleActions(state):
                 Qvalue = self.getQValue(state, action)
                 if Qvalue > max_Qvalue:
