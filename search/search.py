@@ -160,10 +160,10 @@ def uniformCostSearch(problem):
     "*** YOUR CODE HERE ***"
 
     # A queue data structure is used search the deepest nodes first
-    next_node_queue = Queue()  # Queue to store next node to visit
-    next_path_queue = Queue()  # Queue to store next path
+    next_node_queue = PriorityQueue()  # Queue to store next node to visit
+    next_path_queue = PriorityQueue()  # Queue to store next path
     visited = []               # list to contain node that have been visited
-    bfs_path = []              # list to contain the bfs path sequence
+    ucs_path = []              # list to contain the bfs path sequence
 
     # set current state to start state
     current_state = problem.getStartState()    
@@ -180,13 +180,13 @@ def uniformCostSearch(problem):
                 if(neighour[0] not in visited):  
                     # push neighbour node and path list to top of stack
                     next_node_queue.push(neighour[0])
-                    next_path_queue.push([bfs_path+[neighour[1]]])
+                    next_path_queue.push([ucs_path+[neighour[1]]])
         
         # to go deep first we pop next node and path from top of stack
         current_state = next_node_queue.pop()
-        bfs_path = next_path_queue.pop()[0]
+        ucs_path = next_path_queue.pop()[0]
 
-    return bfs_path
+    return ucs_path
 
 
 def nullHeuristic(state, problem=None):
