@@ -206,7 +206,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     next_node_queue = PriorityQueue()  # PQueue to store next node to visit
     next_path_queue = PriorityQueue()  # PQueue to store next path
     visited = []               # list to contain node that have been visited
-    ucs_path = []              # list to contain the bfs path sequence
+    astar_path = []              # list to contain the bfs path sequence
 
     # set current state to start state
     current_state = problem.getStartState()    
@@ -222,16 +222,16 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 # neighbour has not been visited
                 if(neighbour[0] not in visited):
                     # get cost of path containing this neighbour plus the heuristc based on the new node
-                    cost = problem.getCostOfActions(ucs_path+[neighbour[1]]) + heuristic(neighbour[0], problem)
+                    cost = problem.getCostOfActions(astar_path+[neighbour[1]]) + heuristic(neighbour[0], problem)
                     # push neighbour node and path list to queue based on cost
                     next_node_queue.push(neighbour[0], cost)
-                    next_path_queue.push([ucs_path+[neighbour[1]]], cost)
+                    next_path_queue.push([astar_path+[neighbour[1]]], cost)
         
         # to go deep first we pop next node and path from end of queue
         current_state = next_node_queue.pop()
-        ucs_path = next_path_queue.pop()[0]
+        astar_path = next_path_queue.pop()[0]
 
-    return ucs_path
+    return astar_path
 
 
 # Abbreviations
