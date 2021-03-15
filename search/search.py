@@ -88,24 +88,33 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** YOUR CODE HERE ***"
-    
-    next_node_stack = Stack() 
-    next_path_stack = Stack()
-    visited = []
-    dfs_path = []
+
+    # A stack data structure is used search the deepest nodes first
+    next_node_stack = Stack()  # Stack to store next node to visit
+    next_path_stack = Stack()  # Stack to store next path
+    visited = []               # list to contain node that have been visited
+    dfs_path = []              # list to contain the dfs path sequence
+
+    # set current state to start state
     current_state = problem.getStartState()    
     
+    # iterate until the goal state is reached
     while not problem.isGoalState(current_state):
+        # if the current state has not been visited 
         if current_state not in visited:
+            # add current state to list of visited nodes
             visited.append(current_state)
-            for neighour in problem.getSuccessors(current_state):    
-                if(neighour[0] not in visited):   
-                    next_node_stack.push(neighour[0]) 
+            # iterate through all neighouring nodes
+            for neighour in problem.getSuccessors(current_state):
+                # neighbour has not been visited
+                if(neighour[0] not in visited):  
+                    # push neighbour node and path list to top of stack
+                    next_node_stack.push(neighour[0])
                     next_path_stack.push([dfs_path+[neighour[1]]])
-                    
+        
+        # to go deep first we pop next node and path from top of stack
         current_state = next_node_stack.pop()
         dfs_path = next_path_stack.pop()[0]
-        print("New Node - ", current_state)
 
     return dfs_path
 
