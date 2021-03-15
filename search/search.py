@@ -101,10 +101,11 @@ def depthFirstSearch(problem):
             for neighour in problem.getSuccessors(current_state):    
                 if(neighour[0] not in visited):   
                     next_node_stack.push(neighour[0]) 
-                    next_path_stack.push(dfs_path+neighour[1])
+                    next_path_stack.push([neighour[0], dfs_path+[neighour[1]]])
                     
         current_state = next_node_stack.pop()
-        dfs_path = next_node_stack.pop()
+        dfs_path = next_path_stack.pop()   
+        dfs_path = dfs_path[1]
         print("New Node - ", current_state)
 
     return dfs_path
