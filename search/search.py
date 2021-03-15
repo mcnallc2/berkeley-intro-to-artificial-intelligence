@@ -89,8 +89,10 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
     
-    stack = Stack() 
-    visited = [] 
+    next_node_stack = Stack() 
+    next_path_stack = Stack()
+    visited = []
+    dfs_path = []
     current_state = problem.getStartState()    
     
     while not problem.isGoalState(current_state):
@@ -98,14 +100,14 @@ def depthFirstSearch(problem):
             visited.append(current_state)
             for neighour in problem.getSuccessors(current_state):    
                 if(neighour[0] not in visited):   
-                    stack.push(neighour[0])
-                    print("Push node - ", neighour[0])
+                    next_node_stack.push(neighour[0]) 
+                    next_path_stack.push(dfs_path+neighour[1])
                     
-        next_state = stack.pop()
-        current_state = next_state[0]
-        print("Pop node - ", current_state)
+        current_state = next_node_stack.pop()
+        dfs_path = next_node_stack.pop()
+        print("New Node - ", current_state)
 
-
+    return dfs_path
 
 
 def breadthFirstSearch(problem):
