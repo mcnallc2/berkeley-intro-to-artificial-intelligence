@@ -43,14 +43,17 @@ class ValueIterationAgent(ValueEstimationAgent):
         self.iterations = iterations
         self.values = util.Counter() # A Counter is a dict with default 0
 
+        nxt_values = self.values
         for state in self.mdp.getStates():
             max_Qvalue = 0
             for action in self.mdp.getPossibleActions(state):
                 Qvalue = self.getQValue(state, action)
                 if Qvalue > max_Qvalue:
                     max_Qvalue = Qvalue
-        
-            print(max_Qvalue)
+
+            if max_Qvalue != 0:
+                nxt_values[state] = max_Qvalue
+                print(state, max_Qvalue)
 
     def getValue(self, state):
         """
