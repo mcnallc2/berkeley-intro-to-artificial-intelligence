@@ -80,6 +80,15 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
 
+        max_Qvalue = 0
+        max_Qvalue = None
+        for legalAction in self.getLegalActions(state):
+          if self.getQValue(state, legalAction) > max_Qvalue:
+            max_Qvalue = self.getQValue(state, legalAction)
+            max_Qvalue_Action = legalAction
+
+        return max_Qvalue_Action
+
 
     def getAction(self, state):
         """
@@ -96,7 +105,7 @@ class QLearningAgent(ReinforcementAgent):
         legalActions = self.getLegalActions(state)
         action = None
         "*** YOUR CODE HERE ***"
-        
+
         if util.flipCoin(self.epsilon):
           action = self.computeActionFromQValues(state)
         else:
