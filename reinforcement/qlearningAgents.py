@@ -64,11 +64,15 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
 
-        max_Qvalue = 0
+        neg_inf = float("-inf")
+        max_Qvalue = neg_inf
         for legalAction in self.getLegalActions(state):
           if self.getQValue(state, legalAction) > max_Qvalue:
             max_Qvalue = self.getQValue(state, legalAction)
 
+        if max_Qvalue == neg_inf:
+          return 0
+          
         return max_Qvalue
 
 
@@ -80,8 +84,9 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
 
-        max_Qvalue = 0
-        max_Qvalue = None
+        neg_inf = float("-inf")
+        max_Qvalue = neg_inf
+        max_Qvalue_Action = None
         for legalAction in self.getLegalActions(state):
           if self.getQValue(state, legalAction) > max_Qvalue:
             max_Qvalue = self.getQValue(state, legalAction)
