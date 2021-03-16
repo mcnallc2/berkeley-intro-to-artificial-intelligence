@@ -44,19 +44,30 @@ class ValueIterationAgent(ValueEstimationAgent):
         self.values = util.Counter() # A Counter is a dict with default 0
 
         neg_inf = float("-inf")
-        for i in range(self.iterations):               
+        # loop for all iterations
+        for i in range(self.iterations):       
+            # init list of nxt_values for this iteration        
             nxt_values = util.Counter()
+            # for each state in the grid
             for state in self.mdp.getStates():
+                # init max_value var to neg inf
                 max_Qvalue = neg_inf
+                # loop for all available actions
                 for action in self.mdp.getPossibleActions(state):
                     Qvalue = self.getQValue(state, action)
+                    # if nxt Qvalue is greater than max Qvalue
                     if Qvalue > max_Qvalue:
+                        # update max Qvalue
                         max_Qvalue = Qvalue
 
+                # if maxQvalue is not neg inf
                 if max_Qvalue != neg_inf:
+                    # store new max Qvalue in dict of nxt values
                     nxt_values[state] = max_Qvalue
-
+            
+            # update values
             self.values = nxt_values
+
 
     def getValue(self, state):
         """
@@ -71,13 +82,19 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         "*** YOUR CODE HERE ***"
+        
+        # get list of surrounding states and their probabilities
         trans_states_probs = self.mdp.getTransitionStatesAndProbs(state, action)
+        # init next Qvalue
         Qvalue = 0
+        # for each surrounding state
         for trans_state_prob in trans_states_probs:
+            # calculate next value using bellman equation 
+            # sum(Prob*(Reward+(Discount*PrevValue)))
             Qvalue += trans_state_prob[1] * (self.mdp.getReward(state, action, trans_state_prob[0]) + self.discount * self.values[trans_state_prob[0]])
 
+        # return nxt Qvalue
         return Qvalue
-
 
 
     def computeActionFromValues(self, state):
@@ -91,16 +108,23 @@ class ValueIterationAgent(ValueEstimationAgent):
         """
         "*** YOUR CODE HERE ***"
 
+        # init max Qvalue/Action vars to neg inf and null
         neg_inf = float("-inf")
         max_Qvalue = neg_inf
+        # returning None if there are no actins available
         max_Qvalue_Action = None
-
+        
+        # loop for all available actions
         for action in self.mdp.getPossibleActions(state):
-                Qvalue = self.getQValue(state, action)
-                if Qvalue > max_Qvalue:
-                    max_Qvalue = Qvalue
-                    max_Qvalue_Action = action
+            # obtain next Qvalue for given action
+            Qvalue = self.getQValue(state, action)
+            # if nxt Qvalue is greater than max Qvalue
+            if Qvalue > max_Qvalue:
+                # update max Qvalue and action
+                max_Qvalue = Qvalue
+                max_Qvalue_Action = action
 
+        # return action for max Qvalue
         return max_Qvalue_Action
 
 
