@@ -26,10 +26,12 @@ def question2():
     answerNoise = 0
     return answerDiscount, answerNoise
 
-def question3a():
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question3a():    
+    # Prefer the close exit (+1), risking the cliff (-10)
+    # discount should be low with no noise or living reward
+    answerDiscount = 0.1
+    answerNoise = 0
+    answerLivingReward = 0
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
