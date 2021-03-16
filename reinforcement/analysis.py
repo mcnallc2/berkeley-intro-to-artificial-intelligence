@@ -54,17 +54,20 @@ def question3c():
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question3d():
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question3d():    
+    # Prefer the distant exit (+10), avoiding the cliff (-10)
+    # discount should should be high with living reward less than exit reward
+    # require some noise to allow eventual exit
+    answerDiscount = 0.9
+    answerNoise = 0.1
+    answerLivingReward = 0.1
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question3e():
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+def question3e():    
+    answerDiscount = 0.9
+    answerNoise = 0.1
+    answerLivingReward = 0.1
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
