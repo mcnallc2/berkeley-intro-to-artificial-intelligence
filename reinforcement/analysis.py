@@ -64,10 +64,12 @@ def question3d():
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question3e():    
-    answerDiscount = 0.9
-    answerNoise = 0.1
-    answerLivingReward = 0.1
+def question3e():        
+    # Avoid both exits and the cliff (so an episode should never terminate)
+    # set discount of 1 and no noise, but make living reward greater than exit reward
+    answerDiscount = 1
+    answerNoise = 0
+    answerLivingReward = 11
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
