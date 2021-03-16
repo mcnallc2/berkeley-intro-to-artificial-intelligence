@@ -43,7 +43,10 @@ class QLearningAgent(ReinforcementAgent):
         ReinforcementAgent.__init__(self, **args)
 
         "*** YOUR CODE HERE ***"
+
+        # init list of Qvalues for states and actions
         self.Qvalues = util.Counter()
+
 
     def getQValue(self, state, action):
         """
@@ -52,6 +55,8 @@ class QLearningAgent(ReinforcementAgent):
           or the Q node value otherwise
         """
         "*** YOUR CODE HERE ***"
+
+        # return Qvalue for state and action
         return self.Qvalues[state, action]
 
 
@@ -64,15 +69,21 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
 
+        # init negative infinity
         neg_inf = float("-inf")
+        # init max Q value in negative infinity
         max_Qvalue = neg_inf
+        # for all legal actions
         for legalAction in self.getLegalActions(state):
+          # if Qvalue is larger than max Qvalue          
           if self.getQValue(state, legalAction) > max_Qvalue:
+            # update max Qvalue            
             max_Qvalue = self.getQValue(state, legalAction)
 
+        # if max Qvalue is still neg inf return 0
         if max_Qvalue == neg_inf:
           return 0
-          
+
         return max_Qvalue
 
 
@@ -84,12 +95,19 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
 
+        # init negative infinity
         neg_inf = float("-inf")
+        # init max Q value in negative infinity
         max_Qvalue = neg_inf
+        # init max Q value action as None
         max_Qvalue_Action = None
+        # for all legal actions
         for legalAction in self.getLegalActions(state):
+          # if Qvalue is larger than max Qvalue
           if self.getQValue(state, legalAction) > max_Qvalue:
+            # update max Qvalue
             max_Qvalue = self.getQValue(state, legalAction)
+            # update max Qvalue Action
             max_Qvalue_Action = legalAction
 
         return max_Qvalue_Action
@@ -111,12 +129,20 @@ class QLearningAgent(ReinforcementAgent):
         action = None
         "*** YOUR CODE HERE ***"
 
+        # if there are not legal actions return None
+        if not legalActions:
+          return action
+
+        # we select random action with prob of epsilon
         if util.flipCoin(self.epsilon):
-          action = self.computeActionFromQValues(state)
-        else:
+          # get a random action from list of legal actions        
           action = random.choice(legalActions)
-                
+        else:
+          # computing the action with highest Qvalue
+          action = self.computeActionFromQValues(state)
+         
         return action
+
 
     def update(self, state, action, nextState, reward):
         """
@@ -128,7 +154,10 @@ class QLearningAgent(ReinforcementAgent):
           it will be called on your behalf
         """
         "*** YOUR CODE HERE ***"
+        # Q learning - sample based Q value update
+        # sample = R(s,a,s') + y(max(Q(s,a)))
         sample = reward + (self.discount * self.computeValueFromQValues(nextState))
+        # Q(s,a) = (1-alpha)Q(s,a) + alpha(sample)
         self.Qvalues[state, action] = ((1-self.alpha)*self.Qvalues[state, action]) + (self.alpha * sample)
 
 
