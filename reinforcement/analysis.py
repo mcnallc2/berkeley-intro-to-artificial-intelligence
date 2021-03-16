@@ -19,9 +19,11 @@
 # Set the given parameters to obtain the specified policies through
 # value iteration.
 
-def question2():
+def question2():    
+    # discount will already favour crossing the bridge
+    # we can just remove noise
     answerDiscount = 0.9
-    answerNoise = 0.2
+    answerNoise = 0
     return answerDiscount, answerNoise
 
 def question3a():
